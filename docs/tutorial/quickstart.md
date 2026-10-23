@@ -1,27 +1,33 @@
-# Quickstart
+# Início Rápido (Quickstart)
 
-We're going to create a simple API to allow admin users to view and edit the users and groups in the system.
+Olá Pythônicos e Pythônicas! Se vocês estão aqui é porque querem aprender a criar APIs com Django REST framework, certo? Então, preparem-se!
 
-## Project setup
+Este se trata de um guia simples, mas completo, de como criar uma API com Django REST framework traduzido pela comunidade Python Pará, fiquem à vontade para contribuir com as traduções.
 
-Create a new Django project named `tutorial`, then start a new app called `quickstart`.
+O guia quickstart oficial pode ser consultado via [Documentação oficial do Django REST framework](https://www.django-rest-framework.org/tutorial/quickstart/){:target="_blank"}
+
+Vamos criar uma API simples para permitir que usuários administradores visualizem e editem os usuários e grupos do sistema.
+
+## Configuração do projeto ( hands-on )
+
+Crie um novo projeto Django chamado `tutorial`, e em seguida inicie um novo app chamado `quickstart`.
 
 === ":fontawesome-brands-linux: Linux, :fontawesome-brands-apple: macOS"
 
     ```bash
-    # Create the project directory
+    # Cria o diretório do projeto
     mkdir tutorial
     cd tutorial
     
-    # Create a virtual environment to isolate our package dependencies locally
+    # Cria um ambiente virtual para isolar as dependências do pacote localmente
     python3 -m venv .venv
     source .venv/bin/activate
     
-    # Install Django and Django REST framework into the virtual environment
+    # Instala o Django e o Django REST framework no ambiente virtual
     pip install djangorestframework
     
-    # Set up a new project with a single application
-    django-admin startproject tutorial .  # Note the trailing '.' character
+    # Configura um novo projeto com uma única aplicação
+    django-admin startproject tutorial .  # Note o caractere '.' no final
     cd tutorial
     django-admin startapp quickstart
     cd ..
@@ -29,28 +35,28 @@ Create a new Django project named `tutorial`, then start a new app called `quick
 
 === ":fontawesome-brands-windows: Windows"
 
-    If you use Bash for Windows
+    Se você usa o Bash no Windows:
 
     ```bash
-    # Create the project directory
+    # Cria o diretório do projeto
     mkdir tutorial
     cd tutorial
     
-    # Create a virtual environment to isolate our package dependencies locally
+    # Cria um ambiente virtual para isolar as dependências do pacote localmente
     python3 -m venv .venv
     source .venv\Scripts\activate
     
-    # Install Django and Django REST framework into the virtual environment
+    # Instala o Django e o Django REST framework no ambiente virtual
     pip install djangorestframework
     
-    # Set up a new project with a single application
-    django-admin startproject tutorial .  # Note the trailing '.' character
+    # Configura um novo projeto com uma única aplicação
+    django-admin startproject tutorial .  # Note o caractere '.' no final
     cd tutorial
     django-admin startapp quickstart
     cd ..
     ```
 
-The project layout should look like:
+A estrutura do projeto deve ficar parecida com:
 
 ```bash
 $ pwd
@@ -77,25 +83,25 @@ $ find .
 ./manage.py
 ```
 
-It may look unusual that the application has been created within the project directory. Using the project's namespace avoids name clashes with external modules (a topic that goes outside the scope of the quickstart).
+Pode parecer incomum que a aplicação tenha sido criada dentro do diretório do projeto. Usar o namespace do projeto evita conflitos de nomes com módulos externos (um assunto que vai além do escopo deste início rápido).
 
-Now sync your database for the first time:
+Agora sincronize o banco de dados pela primeira vez:
 
 ```bash
 python manage.py migrate
 ```
 
-We'll also create an initial user named `admin` with a password. We'll authenticate as that user later in our example.
+Também vamos criar um usuário inicial chamado `admin` com uma senha. Faremos a autenticação com esse usuário mais adiante em nosso exemplo.
 
 ```bash
 python manage.py createsuperuser --username admin --email admin@example.com
 ```
 
-Once you've set up a database and the initial user is created and ready to go, open up the app's directory and we'll get coding...
+Assim que você configurar o banco de dados e o usuário inicial estiver criado e pronto, abra o diretório da aplicação e vamos começar a programar...
 
-## Serializers
+## Serializadores (Serializers)
 
-First up we're going to define some serializers. Let's create a new module named `tutorial/quickstart/serializers.py` that we'll use for our data representations.
+Primeiro, vamos definir alguns serializadores. Vamos criar um novo módulo chamado `tutorial/quickstart/serializers.py` que usaremos para nossas representações de dados.
 
 ```python
 from django.contrib.auth.models import Group, User
@@ -114,11 +120,11 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         fields = ["url", "name"]
 ```
 
-Notice that we're using hyperlinked relations in this case with `HyperlinkedModelSerializer`.  You can also use primary key and various other relationships, but hyperlinking is good RESTful design.
+Observe que, neste caso, estamos usando relações hiperlinkadas com `HyperlinkedModelSerializer`. Você também pode usar chave primária (primary key) e vários outros relacionamentos, mas o uso de hiperlinks é uma boa prática de design RESTful.
 
-## Views
+## Views (Visualizações)
 
-Right, we'd better write some views then.  Open `tutorial/quickstart/views.py` and get typing.
+Certo, agora precisamos escrever algumas views. Abra `tutorial/quickstart/views.py` e vamos ao código:
 
 ```python
 from django.contrib.auth.models import Group, User
@@ -129,7 +135,7 @@ from tutorial.quickstart.serializers import GroupSerializer, UserSerializer
 
 class UserViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    Endpoint da API que permite visualizar ou editar usuários.
     """
 
     queryset = User.objects.all().order_by("-date_joined")
@@ -139,7 +145,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 class GroupViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows groups to be viewed or edited.
+    Endpoint da API que permite visualizar ou editar grupos.
     """
 
     queryset = Group.objects.all().order_by("name")
@@ -147,13 +153,13 @@ class GroupViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 ```
 
-Rather than write multiple views we're grouping together all the common behavior into classes called `ViewSets`.
+Em vez de escrever múltiplas views, agrupamos todo o comportamento comum em classes chamadas `ViewSets`.
 
-We can easily break these down into individual views if we need to, but using viewsets keeps the view logic nicely organized as well as being very concise.
+Podemos facilmente separá-las em views individuais se necessário, mas usar viewsets mantém a lógica da view bem organizada, além de muito concisa.
 
 ## URLs
 
-Okay, now let's wire up the API URLs.  On to `tutorial/urls.py`...
+Beleza, agora vamos configurar as URLs da API. Vamos para `tutorial/urls.py`...
 
 ```python
 from django.urls import include, path
@@ -165,23 +171,23 @@ router = routers.DefaultRouter()
 router.register(r"users", views.UserViewSet)
 router.register(r"groups", views.GroupViewSet)
 
-# Wire up our API using automatic URL routing.
-# Additionally, we include login URLs for the browsable API.
+# Configura a nossa API usando roteamento automático de URLs.
+# Adicionalmente, incluímos URLs de login para a API navegável (browsable API).
 urlpatterns = [
     path("", include(router.urls)),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
 ]
 ```
 
-Because we're using viewsets instead of views, we can automatically generate the URL conf for our API, by simply registering the viewsets with a router class.
+Como estamos usando viewsets em vez de views, podemos gerar automaticamente a configuração de URLs da nossa API, simplesmente registrando os viewsets em uma classe router.
 
-Again, if we need more control over the API URLs we can simply drop down to using regular class-based views, and writing the URL conf explicitly.
+Novamente, se precisarmos de mais controle sobre as URLs da API, podemos simplesmente voltar a usar views convencionais baseadas em classes (class-based views) e escrever as configurações de URL explicitamente.
 
-Finally, we're including default login and logout views for use with the browsable API.  That's optional, but useful if your API requires authentication and you want to use the browsable API.
+Por fim, estamos incluindo as views padrão de login e logout para uso com a API navegável. Isso é opcional, mas útil se a sua API exigir autenticação e você quiser usar a API navegável.
 
-## Pagination
+## Paginação (Pagination)
 
-Pagination allows you to control how many objects per page are returned. To enable it add the following lines to `tutorial/settings.py`
+A paginação permite controlar quantos objetos são retornados por página. Para ativá-la, adicione as seguintes linhas em `tutorial/settings.py`:
 
 ```python
 REST_FRAMEWORK = {
@@ -190,9 +196,9 @@ REST_FRAMEWORK = {
 }
 ```
 
-## Settings
+## Configurações (Settings)
 
-Add `'rest_framework'` to `INSTALLED_APPS`. The settings module will be in `tutorial/settings.py`
+Adicione `'rest_framework'` em `INSTALLED_APPS`. O módulo de configurações fica em `tutorial/settings.py`:
 
 ```text
 INSTALLED_APPS = [
@@ -201,19 +207,19 @@ INSTALLED_APPS = [
 ]
 ```
 
-Okay, we're done.
+Pronto, finalizamos a configuração.
 
 ---
 
-## Testing our API
+## Testando nossa API
 
-We're now ready to test the API we've built.  Let's fire up the server from the command line.
+Agora estamos prontos para testar a API que construímos. Vamos iniciar o servidor pela linha de comando:
 
 ```bash
 python manage.py runserver
 ```
 
-We can now access our API, both from the command-line, using tools like `curl`...
+Podemos acessar a nossa API tanto pela linha de comando, usando ferramentas como o `curl`...
 
 ```bash
 bash: curl -u admin -H 'Accept: application/json; indent=4' http://127.0.0.1:8000/users/
@@ -233,7 +239,7 @@ Enter host password for user 'admin':
 }
 ```
 
-Or using the [httpie][httpie], command line tool...
+Ou usando a ferramenta de linha de comando [httpie][httpie]...
 
 ```bash
 bash: http -a admin http://127.0.0.1:8000/users/
@@ -255,17 +261,18 @@ $HTTP/1.1 200 OK
 }
 ```
 
-Or directly through the browser, by going to the URL `http://127.0.0.1:8000/users/`...
+Ou diretamente pelo navegador, acessando a URL `http://127.0.0.1:8000/users/`...
 
-![Quick start image][image]
+![Imagem do início rápido][image]
 
-If you're working through the browser, make sure to login using the control in the top right corner.
+Se você estiver testando pelo navegador, lembre-se de fazer login usando o controle no canto superior direito.
 
-Great, that was easy!
+Ótimo, foi fácil!
 
-If you want to get a more in depth understanding of how REST framework fits together head on over to [the tutorial][tutorial], or start browsing the [API guide][guide].
+Se você quiser entender mais a fundo como as partes do REST framework funcionam juntas, dê uma olhada no [tutorial completo][tutorial] ou explore o [guia da API][guide].
 
 [image]: ../img/quickstart.png
 [tutorial]: 1-serialization.md
 [guide]: ../api-guide/requests.md
 [httpie]: https://httpie.io/docs#installation
+
