@@ -1,11 +1,13 @@
 site_name: Django REST framework
 site_url: https://www.django-rest-framework.org/
 site_description: Django REST framework - Web APIs for Django
+copyright: 'Esta é uma documentação comunitária mantida pela comunidade <a href="https://pa.python.org.br/" target="_blank" rel="noopener" class="community-link">Python Pará</a>.'
 
 repo_url: https://github.com/encode/django-rest-framework
 
 theme:
   name: material
+  language: pt-BR
   custom_dir: docs/theme
   favicon: theme/img/favicon.ico
   logo: theme/img/logo.png
@@ -15,21 +17,21 @@ theme:
       accent: custom
       toggle:
         icon: material/brightness-auto
-        name: "Switch to light mode"
+        name: "Mudar para modo claro"
     - media: "(prefers-color-scheme: light)"
       scheme: default
       primary: custom
       accent: custom
       toggle:
         icon: material/brightness-7
-        name: "Switch to dark mode"
+        name: "Mudar para modo escuro"
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
       primary: custom
       accent: custom
       toggle:
         icon: material/brightness-4
-        name: "Switch to system preference"
+        name: "Mudar para preferência do sistema"
   features:
     - content.tabs.link
     - content.code.annotate
@@ -76,7 +78,7 @@ plugins:
 nav:
   - Home: 'index.md'
   - Tutorial:
-    - 'Quickstart': 'tutorial/quickstart.md'
+    - 'Início Rápido': 'tutorial/quickstart.md'
     - '1 - Serialization': 'tutorial/1-serialization.md'
     - '2 - Requests and responses': 'tutorial/2-requests-and-responses.md'
     - '3 - Class based views': 'tutorial/3-class-based-views.md'

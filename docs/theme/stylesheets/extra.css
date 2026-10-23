@@ -84,3 +84,26 @@ a.md-nav__link.md-nav__link--active {
   font-weight: 700;
   color: var(--md-accent-fg-color--dark);
 }
+
+/* Destaque para link da comunidade no rodapé */
+.community-link {
+  color: #0284c7 !important;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.community-link:hover {
+  color: #0369a1 !important;
+  opacity: 0.9;
+}
+
+[data-md-color-scheme="slate"] .community-link {
+  color: #38bdf8 !important;
+}
+
+[data-md-color-scheme="slate"] .community-link:hover {
+  color: #7dd3fc !important;
+}
+
