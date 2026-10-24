@@ -48,39 +48,44 @@ hide:
 ![Django REST Framework](img/logo-light.png#only-light)
 ![Django REST Framework](img/logo-dark.png#only-dark)
 
-O Django REST framework é um kit de ferramentas poderoso e flexível para a construção de Web APIs.
+Bem-vindo ao Django REST framework, seu kit de ferramentas poderosas e flexíveis para você criar APIs Web com Python e Django.
 
-Alguns motivos pelos quais você pode querer usar o REST framework:
+Alguns motivos pelos quais você pode se interessar a usar o REST framework:
 
-* A API navegável pela Web (Browsable API) é um enorme ganho de usabilidade para os desenvolvedores.
-* [Políticas de autenticação][authentication], incluindo pacotes para [OAuth1a][oauth1-section] e [OAuth2][oauth2-section].
-* [Serialização][serializers] com suporte a fontes de dados [ORM][modelserializer-section] e [não-ORM][serializer-section].
-* Totalmente customizável — use simplesmente [views baseadas em funções][functionview-section] tradicionais se você não precisar dos recursos [mais][generic-views] [avançados][viewsets] [como routers][routers].
-* Documentação abrangente e [ótimo suporte da comunidade][group].
-* Utilizado e aprovado por empresas reconhecidas internacionalmente, incluindo [Mozilla][mozilla], [Red Hat][redhat], [Heroku][heroku] e [Eventbrite][eventbrite].
+* A API Navegável (Browsable API) vem com uma interface prática e super amigável, pensada para tornar a vida dos desenvolvedores muito mais fácil.
+* [Autenticação flexível e completa][authentication], com suporte nativo e integração fácil a padrões como [OAuth1a][oauth1-section] e [OAuth2][oauth2-section].
+* [Serialização poderosa][serializers] que se adapta perfeitamente tanto aos modelos do [ORM do Django][modelserializer-section] quanto a fontes de dados [não-ORM][serializer-section].
+* Totalmente modular e customizável — comece de forma simples com [views baseadas em funções][functionview-section] e escale para recursos avançados como [views genéricas][generic-views], [ViewSets][viewsets] e [roteadores automáticos (Routers)][routers].
+* Documentação rica e detalhada, acompanhada de uma [comunidade ativa e acolhedora][group] para tirar dúvidas.
+* Testado em produção e confiado por gigantes da tecnologia, como [Mozilla][mozilla], [Red Hat][redhat], [Heroku][heroku] e [Eventbrite][eventbrite].
 
 ---
 
 ## Requisitos
 
-O REST framework requer o seguinte:
+Antes de começar, certifique-se de que seu ambiente atenda aos requisitos mínimos:
 
-* Django (5.2, 6.0, 6.1)
-* Python (3.10, 3.11, 3.12, 3.13, 3.14, 3.15)
+* **Django**: versões 5.2, 6.0 e 6.1
+* **Python**: versões 3.10, 3.11, 3.12, 3.13, 3.14 e 3.15
 
-Nós **recomendamos fortemente** e oferecemos suporte oficial apenas para a versão mais recente de correção (patch release) de cada série do Python e do Django.
+!!! tip "Dica de estabilidade e segurança"
+    Recomendamos fortemente manter o Python e o Django sempre atualizados no último *patch release* oficial da versão escolhida para garantir estabilidade e correções de segurança.
 
-Os seguintes pacotes são opcionais:
+---
 
-* [PyYAML][pyyaml], [uritemplate][uritemplate] (5.1+, 3.0.0+) - Suporte para geração de schemas.
-* [Markdown][markdown] (3.3.0+) - Suporte a Markdown para a API navegável.
-* [Pygments][pygments] (2.7.0+) - Adiciona realce de sintaxe ao processamento de Markdown.
-* [django-filter][django-filter] (1.0.1+) - Suporte a filtros.
-* [django-guardian][django-guardian] (1.1.1+) - Suporte a permissões em nível de objeto.
+### Pacotes Opcionais
+
+O Django REST framework já vem pronto para uso, mas você pode expandir suas funcionalidades com bibliotecas opcionais conforme as necessidades do seu projeto:
+
+* **Documentação e Schemas (OpenAPI)** — **[PyYAML][pyyaml]** (`5.1+`) e **[uritemplate][uritemplate]** (`3.0.0+`): Geram schemas estruturados automaticamente para integrar com Swagger, Redoc e ferramentas de documentação interativa.
+* **Interface da API Navegável Aprimorada** — **[Markdown][markdown]** (`3.3.0+`) e **[Pygments][pygments]** (`2.7.0+`): Adicionam suporte a formatação rica em Markdown e realce colorido de sintaxe aos blocos de código e respostas JSON.
+* **Filtros e Buscas Dinâmicas** — **[django-filter][django-filter]** (`1.0.1+`): Permite criar filtros poderosos na URL (ex: `?categoria=livros&preco_max=50`) com pouquíssimas linhas de código.
+* **Controle de Acesso Granular** — **[django-guardian][django-guardian]** (`1.1.1+`): Gerenciamento avançado de permissões por objeto (ex: permitir que um usuário edite apenas o post que ele mesmo criou).
+
 
 ## Instalação
 
-Instale usando o `pip`, incluindo quaisquer pacotes opcionais que desejar...
+A maneira mais rápida e recomendada de começar é instalando via `pip`. Você também pode instalar juntos os pacotes opcionais que fizerem sentido para o seu projeto:
 
 ```bash
 pip install djangorestframework
@@ -88,13 +93,13 @@ pip install markdown       # Suporte a Markdown para a API navegável.
 pip install django-filter  # Suporte a filtros
 ```
 
-...ou clone o projeto a partir do GitHub:
+Ou, se preferir, você também pode clonar o projeto diretamente do GitHub:
 
 ```bash
 git clone https://github.com/encode/django-rest-framework
 ```
 
-Adicione `'rest_framework'` à sua configuração `INSTALLED_APPS`:
+Depois de instalar, basta registrar o `'rest_framework'` na lista de `INSTALLED_APPS` do seu `settings.py`:
 
 ```python
 INSTALLED_APPS = [
@@ -103,7 +108,7 @@ INSTALLED_APPS = [
 ]
 ```
 
-Se você planeja usar a API navegável, provavelmente também desejará adicionar as views de login e logout do REST framework. Adicione o seguinte ao seu arquivo `urls.py` raiz:
+Para aproveitar ao máximo a interface visual da API Navegável (incluindo login e logout pelo próprio navegador), adicione as seguintes rotas ao seu arquivo `urls.py` principal:
 
 ```python
 urlpatterns = [
@@ -112,15 +117,13 @@ urlpatterns = [
 ]
 ```
 
-Observe que o caminho da URL pode ser qualquer um que você desejar.
+*Dica: o caminho `'api-auth/'` é apenas uma sugestão — você pode usar o prefixo de URL que preferir no seu projeto.*
 
-## Exemplo
+## Exemplo Prático
 
-Vamos dar uma olhada em um exemplo rápido de como usar o REST framework para construir uma API simples baseada em modelos.
+Que tal vermos o framework em ação? Vamos construir juntos uma API simples e completa, com suporte a leitura e escrita, para gerenciar os usuários do nosso projeto.
 
-Criaremos uma API de leitura e escrita para acessar informações sobre os usuários do nosso projeto.
-
-Quaisquer configurações globais para uma API do REST framework são mantidas em um único dicionário de configuração chamado `REST_FRAMEWORK`. Comece adicionando o seguinte ao seu módulo `settings.py`:
+Toda a configuração global da sua API fica organizada em um único dicionário chamado `REST_FRAMEWORK`. Para começar, adicione esta configuração básica no seu `settings.py`:
 
 ```python
 REST_FRAMEWORK = {
@@ -132,10 +135,9 @@ REST_FRAMEWORK = {
 }
 ```
 
-Não se esqueça de verificar se você também adicionou `rest_framework` ao seu `INSTALLED_APPS`.
+Lembre-se apenas de conferir se o `'rest_framework'` já está registrado no seu `INSTALLED_APPS`!
 
-Estamos prontos para criar nossa API agora.
-Aqui está o módulo `urls.py` raiz do nosso projeto:
+Tudo pronto para estruturar nossa API! Aqui está como fica o `urls.py` principal conectando os modelos, serializadores, views e rotas:
 
 ```python
 from django.urls import path, include
@@ -168,25 +170,25 @@ urlpatterns = [
 ]
 ```
 
-Agora você pode abrir a API no seu navegador em [http://127.0.0.1:8000/](http://127.0.0.1:8000/) e visualizar a sua nova API de 'usuários'. Se você usar o controle de login no canto superior direito, também poderá adicionar, criar e excluir usuários do sistema.
+Prontinho! Agora é só abrir a API no seu navegador em [http://127.0.0.1:8000/](http://127.0.0.1:8000/) para explorar os seus novos endpoints de usuários. Fazendo login pelo botão no canto superior direito, você poderá criar, editar e excluir registros com total facilidade direto pela interface web!
 
 ## Início Rápido (Quickstart)
 
-Mal pode esperar para começar? O [guia de início rápido][quickstart] é a forma mais rápida de começar e construir APIs com o REST framework.
+Animado para colocar a mão na massa? O nosso [Guia de Início Rápido][quickstart] é o caminho mais direto para você aprender o fluxo completo e criar sua primeira API em poucos minutos!
 
 ## Desenvolvimento
 
-Consulte as [Diretrizes de contribuição][contributing] para obter informações sobre como clonar o repositório, executar a suíte de testes e ajudar a manter a base de código do REST framework.
+Quer fazer parte da evolução do projeto? Dê uma olhada nas nossas [Diretrizes de Contribuição][contributing] para aprender como configurar o ambiente local, rodar a suíte de testes e enviar suas próprias melhorias.
 
-## Suporte
+## Suporte da Comunidade
 
-Para suporte, consulte o [grupo de discussão do REST framework][group], entre no canal `#restframework` em `irc.libera.chat` ou faça uma pergunta no [Stack Overflow][stack-overflow], certificando-se de incluir a tag ['django-rest-framework'][django-rest-framework-tag].
+Ficou com alguma dúvida ou travou em algo? A comunidade está sempre pronta para ajudar! Participe do [grupo de discussão oficial][group], troque uma ideia no canal `#restframework` na Libera.Chat ou faça sua pergunta no [Stack Overflow][stack-overflow] usando a tag ['django-rest-framework'][django-rest-framework-tag].
 
 ## Segurança
 
-**Por favor, relate problemas de segurança enviando um e-mail para security@encode.io**.
+Se você encontrar qualquer vulnerabilidade ou questão de segurança, **por favor relate enviando um e-mail para security@encode.io**.
 
-Os mantenedores do projeto trabalharão com você para resolver quaisquer problemas necessários, antes de qualquer divulgação pública.
+A equipe de mantenedores trabalhará diretamente com você para analisar e resolver a situação com prioridade, antes de qualquer divulgação pública.
 
 ## Licença
 
