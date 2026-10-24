@@ -48,54 +48,58 @@ hide:
 ![Django REST Framework](img/logo-light.png#only-light)
 ![Django REST Framework](img/logo-dark.png#only-dark)
 
-Django REST framework is a powerful and flexible toolkit for building Web APIs.
+Bem-vindo ao Django REST framework, seu kit de ferramentas poderosas e flexíveis para você criar APIs Web com Python e Django.
 
-Some reasons you might want to use REST framework:
+Alguns motivos pelos quais você pode se interessar a usar o REST framework:
 
-* The Web browsable API is a huge usability win for your developers.
-* [Authentication policies][authentication] including packages for [OAuth1a][oauth1-section] and [OAuth2][oauth2-section].
-* [Serialization][serializers] that supports both [ORM][modelserializer-section] and [non-ORM][serializer-section] data sources.
-* Customizable all the way down - just use [regular function-based views][functionview-section] if you don't need the [more][generic-views] [powerful][viewsets] [features][routers].
-* Extensive documentation, and [great community support][group].
-* Used and trusted by internationally recognized companies including [Mozilla][mozilla], [Red Hat][redhat], [Heroku][heroku], and [Eventbrite][eventbrite].
+* A API Navegável (Browsable API) vem com uma interface prática e super amigável, pensada para tornar a vida dos desenvolvedores muito mais fácil.
+* [Autenticação flexível e completa][authentication], com suporte nativo e integração fácil a padrões como [OAuth1a][oauth1-section] e [OAuth2][oauth2-section].
+* [Serialização poderosa][serializers] que se adapta perfeitamente tanto aos modelos do [ORM do Django][modelserializer-section] quanto a fontes de dados [não-ORM][serializer-section].
+* Totalmente modular e customizável — comece de forma simples com [views baseadas em funções][functionview-section] e escale para recursos avançados como [views genéricas][generic-views], [ViewSets][viewsets] e [roteadores automáticos (Routers)][routers].
+* Documentação rica e detalhada, acompanhada de uma [comunidade ativa e acolhedora][group] para tirar dúvidas.
+* Testado em produção e confiado por gigantes da tecnologia, como [Mozilla][mozilla], [Red Hat][redhat], [Heroku][heroku] e [Eventbrite][eventbrite].
 
 ---
 
-## Requirements
+## Requisitos
 
-REST framework requires the following:
+Antes de começar, certifique-se de que seu ambiente atenda aos requisitos mínimos:
 
-* Django (5.2, 6.0, 6.1)
-* Python (3.10, 3.11, 3.12, 3.13, 3.14, 3.15)
+* **Django**: versões 5.2, 6.0 e 6.1
+* **Python**: versões 3.10, 3.11, 3.12, 3.13, 3.14 e 3.15
 
-We **highly recommend** and only officially support the latest patch release of
-each Python and Django series.
+!!! tip "Dica de estabilidade e segurança"
+    Recomendamos fortemente manter o Python e o Django sempre atualizados no último *patch release* oficial da versão escolhida para garantir estabilidade e correções de segurança.
 
-The following packages are optional:
+---
 
-* [PyYAML][pyyaml], [uritemplate][uritemplate] (5.1+, 3.0.0+) - Schema generation support.
-* [Markdown][markdown] (3.3.0+) - Markdown support for the browsable API.
-* [Pygments][pygments] (2.7.0+) - Add syntax highlighting to Markdown processing.
-* [django-filter][django-filter] (1.0.1+) - Filtering support.
-* [django-guardian][django-guardian] (1.1.1+) - Object level permissions support.
+### Pacotes Opcionais
 
-## Installation
+O Django REST framework já vem pronto para uso, mas você pode expandir suas funcionalidades com bibliotecas opcionais conforme as necessidades do seu projeto:
 
-Install using `pip`, including any optional packages you want...
+* **Documentação e Schemas (OpenAPI)** — **[PyYAML][pyyaml]** (`5.1+`) e **[uritemplate][uritemplate]** (`3.0.0+`): Geram schemas estruturados automaticamente para integrar com Swagger, Redoc e ferramentas de documentação interativa.
+* **Interface da API Navegável Aprimorada** — **[Markdown][markdown]** (`3.3.0+`) e **[Pygments][pygments]** (`2.7.0+`): Adicionam suporte a formatação rica em Markdown e realce colorido de sintaxe aos blocos de código e respostas JSON.
+* **Filtros e Buscas Dinâmicas** — **[django-filter][django-filter]** (`1.0.1+`): Permite criar filtros poderosos na URL (ex: `?categoria=livros&preco_max=50`) com pouquíssimas linhas de código.
+* **Controle de Acesso Granular** — **[django-guardian][django-guardian]** (`1.1.1+`): Gerenciamento avançado de permissões por objeto (ex: permitir que um usuário edite apenas o post que ele mesmo criou).
+
+
+## Instalação
+
+A maneira mais rápida e recomendada de começar é instalando via `pip`. Você também pode instalar juntos os pacotes opcionais que fizerem sentido para o seu projeto:
 
 ```bash
 pip install djangorestframework
-pip install markdown       # Markdown support for the browsable API.
-pip install django-filter  # Filtering support
+pip install markdown       # Suporte a Markdown para a API navegável.
+pip install django-filter  # Suporte a filtros
 ```
 
-...or clone the project from github.
+Ou, se preferir, você também pode clonar o projeto diretamente do GitHub:
 
 ```bash
 git clone https://github.com/encode/django-rest-framework
 ```
 
-Add `'rest_framework'` to your `INSTALLED_APPS` setting.
+Depois de instalar, basta registrar o `'rest_framework'` na lista de `INSTALLED_APPS` do seu `settings.py`:
 
 ```python
 INSTALLED_APPS = [
@@ -104,7 +108,7 @@ INSTALLED_APPS = [
 ]
 ```
 
-If you're intending to use the browsable API you'll probably also want to add REST framework's login and logout views.  Add the following to your root `urls.py` file.
+Para aproveitar ao máximo a interface visual da API Navegável (incluindo login e logout pelo próprio navegador), adicione as seguintes rotas ao seu arquivo `urls.py` principal:
 
 ```python
 urlpatterns = [
@@ -113,30 +117,27 @@ urlpatterns = [
 ]
 ```
 
-Note that the URL path can be whatever you want.
+*Dica: o caminho `'api-auth/'` é apenas uma sugestão — você pode usar o prefixo de URL que preferir no seu projeto.*
 
-## Example
+## Exemplo Prático
 
-Let's take a look at a quick example of using REST framework to build a simple model-backed API.
+Que tal vermos o framework em ação? Vamos construir juntos uma API simples e completa, com suporte a leitura e escrita, para gerenciar os usuários do nosso projeto.
 
-We'll create a read-write API for accessing information on the users of our project.
-
-Any global settings for a REST framework API are kept in a single configuration dictionary named `REST_FRAMEWORK`.  Start off by adding the following to your `settings.py` module:
+Toda a configuração global da sua API fica organizada em um único dicionário chamado `REST_FRAMEWORK`. Para começar, adicione esta configuração básica no seu `settings.py`:
 
 ```python
 REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
+    # Use as permissões padrão `django.contrib.auth` do Django,
+    # ou permita acesso somente leitura para usuários não autenticados.
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
     ]
 }
 ```
 
-Don't forget to make sure you've also added `rest_framework` to your `INSTALLED_APPS`.
+Lembre-se apenas de conferir se o `'rest_framework'` já está registrado no seu `INSTALLED_APPS`!
 
-We're ready to create our API now.
-Here's our project's root `urls.py` module:
+Tudo pronto para estruturar nossa API! Aqui está como fica o `urls.py` principal conectando os modelos, serializadores, views e rotas:
 
 ```python
 from django.urls import path, include
@@ -144,82 +145,65 @@ from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets
 
 
-# Serializers define the API representation.
+# Serializadores definem a representação da API.
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
         fields = ["url", "username", "email", "is_staff"]
 
 
-# ViewSets define the view behavior.
+# ViewSets definem o comportamento da view.
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
-# Routers provide an easy way of automatically determining the URL conf.
+# Routers oferecem uma forma simples de determinar automaticamente a configuração de URLs.
 router = routers.DefaultRouter()
 router.register(r"users", UserViewSet)
 
-# Wire up our API using automatic URL routing.
-# Additionally, we include login URLs for the browsable API.
+# Configura a nossa API usando roteamento automático de URLs.
+# Adicionalmente, incluímos URLs de login para a API navegável.
 urlpatterns = [
     path("", include(router.urls)),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
 ]
 ```
 
-You can now open the API in your browser at [http://127.0.0.1:8000/](http://127.0.0.1:8000/), and view your new 'users' API. If you use the login control in the top right corner you'll also be able to add, create and delete users from the system.
+Prontinho! Agora é só abrir a API no seu navegador em [http://127.0.0.1:8000/](http://127.0.0.1:8000/) para explorar os seus novos endpoints de usuários. Fazendo login pelo botão no canto superior direito, você poderá criar, editar e excluir registros com total facilidade direto pela interface web!
 
-## Quickstart
+## Início Rápido (Quickstart)
 
-Can't wait to get started? The [quickstart guide][quickstart] is the fastest way to get up and running, and building APIs with REST framework.
+Animado para colocar a mão na massa? O nosso [Guia de Início Rápido][quickstart] é o caminho mais direto para você aprender o fluxo completo e criar sua primeira API em poucos minutos!
 
-## Development
+## Desenvolvimento
 
-See the [Contribution guidelines][contributing] for information on how to clone
-the repository, run the test suite and help maintain the code base of REST
-Framework.
+Quer fazer parte da evolução do projeto? Dê uma olhada nas nossas [Diretrizes de Contribuição][contributing] para aprender como configurar o ambiente local, rodar a suíte de testes e enviar suas próprias melhorias.
 
-## Support
+## Suporte da Comunidade
 
-For support please see the [REST framework discussion group][group], try the `#restframework` channel on `irc.libera.chat`, or raise a question on [Stack Overflow][stack-overflow], making sure to include the ['django-rest-framework'][django-rest-framework-tag] tag.
+Ficou com alguma dúvida ou travou em algo? A comunidade está sempre pronta para ajudar! Participe do [grupo de discussão oficial][group], troque uma ideia no canal `#restframework` na Libera.Chat ou faça sua pergunta no [Stack Overflow][stack-overflow] usando a tag ['django-rest-framework'][django-rest-framework-tag].
 
-## Security
+## Segurança
 
-**Please report security issues by emailing security@encode.io**.
+Se você encontrar qualquer vulnerabilidade ou questão de segurança, **por favor relate enviando um e-mail para security@encode.io**.
 
-The project maintainers will then work with you to resolve any issues where required, prior to any public disclosure.
+A equipe de mantenedores trabalhará diretamente com você para analisar e resolver a situação com prioridade, antes de qualquer divulgação pública.
 
-## License
+## Licença
 
-Copyright © 2011-present, [Encode OSS Ltd](https://www.encode.io/).
-All rights reserved.
+O Django REST Framework é um projeto de código aberto distribuído sob os termos da **Licença BSD de 3 Cláusulas**:
 
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
+Copyright © 2011-presente, [Encode OSS Ltd](https://www.encode.io/).  
+Todos os direitos reservados.
 
-* Redistributions of source code must retain the above copyright notice, this
-  list of conditions and the following disclaimer.
+A redistribuição e o uso em formatos de código-fonte e binário, com ou sem modificações, são permitidos desde que atendidas as seguintes condições:
 
-* Redistributions in binary form must reproduce the above copyright notice,
-  this list of conditions and the following disclaimer in the documentation
-  and/or other materials provided with the distribution.
+* As redistribuições do código-fonte devem manter o aviso de direitos autorais acima, esta lista de condições e a seguinte isenção de responsabilidade.
+* As redistribuições em formato binário devem reproduzir o aviso de direitos autorais acima, esta lista de condições e a seguinte isenção de responsabilidade na documentação e/ou em outros materiais fornecidos com a distribuição.
+* Nem o nome do detentor dos direitos autorais nem os nomes de seus colaboradores podem ser usados para endossar ou promover produtos derivados deste software sem autorização prévia específica por escrito.
 
-* Neither the name of the copyright holder nor the names of its
-  contributors may be used to endorse or promote products derived from
-  this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ESTE SOFTWARE É FORNECIDO PELOS DETENTORES DOS DIREITOS AUTORAIS E COLABORADORES "COMO ESTÁ" (*AS IS*), E QUAISQUER GARANTIAS EXPRESSAS OU IMPLÍCITAS, INCLUINDO, SEM LIMITAÇÃO, AS GARANTIAS IMPLÍCITAS DE COMERCIABILIDADE E ADEQUAÇÃO A UM PROPÓSITO ESPECÍFICO, SÃO TOTALMENTE RENUNCIADAS. EM NENHUM CASO O DETENTOR DOS DIREITOS AUTORAIS OU SEUS COLABORADORES SERÃO RESPONSÁVEIS POR QUAISQUER DANOS DIRETOS, INDIRETOS, INCIDENTAIS, ESPECIAIS, EXEMPLARES OU CONSEQUENTES (INCLUINDO, SEM LIMITAÇÃO, A AQUISIÇÃO DE PRODUTOS OU SERVIÇOS SUBSTITUTOS; PERDA DE USO, DADOS OU LUCROS; OU INTERRUPÇÃO DE ATIVIDADES), INDEPENDENTEMENTE DA CAUSA E SOB QUALQUER TEORIA DE RESPONSABILIDADE, SEJA EM CONTRATO, RESPONSABILIDADE OBJETIVA OU DANO ILÍCITO (INCLUINDO NEGLIGÊNCIA OU OUTRA), DECORRENTES DE QUALQUER FORMA DO USO DESTE SOFTWARE, MESMO QUE ADVERTIDOS DA POSSIBILIDADE DE TAIS DANOS.
 
 [mozilla]: https://www.mozilla.org/en-US/about/
 [redhat]: https://www.redhat.com/
@@ -252,3 +236,4 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 [stack-overflow]: https://stackoverflow.com/
 [django-rest-framework-tag]: https://stackoverflow.com/questions/tagged/django-rest-framework
 [security-mail]: mailto:rest-framework-security@googlegroups.com
+
