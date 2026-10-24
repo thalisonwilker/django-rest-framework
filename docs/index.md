@@ -192,33 +192,18 @@ A equipe de mantenedores trabalhará diretamente com você para analisar e resol
 
 ## Licença
 
-Copyright © 2011-presente, [Encode OSS Ltd](https://www.encode.io/).
+O Django REST Framework é um projeto de código aberto distribuído sob os termos da **Licença BSD de 3 Cláusulas**:
+
+Copyright © 2011-presente, [Encode OSS Ltd](https://www.encode.io/).  
 Todos os direitos reservados.
 
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
+A redistribuição e o uso em formatos de código-fonte e binário, com ou sem modificações, são permitidos desde que atendidas as seguintes condições:
 
-* Redistributions of source code must retain the above copyright notice, this
-  list of conditions and the following disclaimer.
+* As redistribuições do código-fonte devem manter o aviso de direitos autorais acima, esta lista de condições e a seguinte isenção de responsabilidade.
+* As redistribuições em formato binário devem reproduzir o aviso de direitos autorais acima, esta lista de condições e a seguinte isenção de responsabilidade na documentação e/ou em outros materiais fornecidos com a distribuição.
+* Nem o nome do detentor dos direitos autorais nem os nomes de seus colaboradores podem ser usados para endossar ou promover produtos derivados deste software sem autorização prévia específica por escrito.
 
-* Redistributions in binary form must reproduce the above copyright notice,
-  this list of conditions and the following disclaimer in the documentation
-  and/or other materials provided with the distribution.
-
-* Neither the name of the copyright holder nor the names of its
-  contributors may be used to endorse or promote products derived from
-  this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ESTE SOFTWARE É FORNECIDO PELOS DETENTORES DOS DIREITOS AUTORAIS E COLABORADORES "COMO ESTÁ" (*AS IS*), E QUAISQUER GARANTIAS EXPRESSAS OU IMPLÍCITAS, INCLUINDO, SEM LIMITAÇÃO, AS GARANTIAS IMPLÍCITAS DE COMERCIABILIDADE E ADEQUAÇÃO A UM PROPÓSITO ESPECÍFICO, SÃO TOTALMENTE RENUNCIADAS. EM NENHUM CASO O DETENTOR DOS DIREITOS AUTORAIS OU SEUS COLABORADORES SERÃO RESPONSÁVEIS POR QUAISQUER DANOS DIRETOS, INDIRETOS, INCIDENTAIS, ESPECIAIS, EXEMPLARES OU CONSEQUENTES (INCLUINDO, SEM LIMITAÇÃO, A AQUISIÇÃO DE PRODUTOS OU SERVIÇOS SUBSTITUTOS; PERDA DE USO, DADOS OU LUCROS; OU INTERRUPÇÃO DE ATIVIDADES), INDEPENDENTEMENTE DA CAUSA E SOB QUALQUER TEORIA DE RESPONSABILIDADE, SEJA EM CONTRATO, RESPONSABILIDADE OBJETIVA OU DANO ILÍCITO (INCLUINDO NEGLIGÊNCIA OU OUTRA), DECORRENTES DE QUALQUER FORMA DO USO DESTE SOFTWARE, MESMO QUE ADVERTIDOS DA POSSIBILIDADE DE TAIS DANOS.
 
 [mozilla]: https://www.mozilla.org/en-US/about/
 [redhat]: https://www.redhat.com/
